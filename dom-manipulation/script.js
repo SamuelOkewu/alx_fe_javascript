@@ -263,6 +263,25 @@ function exportQuotes() {
     displayFeedback(importExportFeedback, "Quotes exported successfully!", 'text-blue-600');
 }
 
+//**
+ //* Implements the filtering logic for the quote list display.
+// * Also persists the selected filter to Local Storage.
+// */
+function filterQuotes() {
+    const selectedFilter = categoryFilter.value;
+    
+    // 1. Save filter preference to Local Storage
+    localStorage.setItem('lastSelectedFilter', selectedFilter);
+
+    // 2. Re-render the list using the new filter
+    renderQuoteList(selectedFilter);
+}
+
+/**
+ * Renders the list of all available quotes, filtered by the selected category.
+ * @param {string | null} filterValue - The category value to filter by. Defaults to current select value.
+ */
+
 // --- FILTERING & UI LOGIC ---
 
 /**
