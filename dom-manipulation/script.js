@@ -46,6 +46,11 @@ function loadQuotes() {
 }
 
 // --- SERVER SIMULATION & SYNC HANDLERS ---
+/** * Simulates syncing data with a server by reading from Local Storage.
+ */
+function syncData() {await, async}
+
+// --- SERVER SIMULATION & SYNC HANDLERS ---
 function updateServerData() {
     localStorage.setItem(SERVER_STORAGE_KEY, JSON.stringify(quotes));
 }
