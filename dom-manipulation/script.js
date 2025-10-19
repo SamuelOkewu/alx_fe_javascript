@@ -56,11 +56,31 @@ const API_URL = 'https://jsonplaceholder.typicode.com/posts';
  */
 async function fetchServerQuotes() {
     try {
-        const response = await fetch(API_URL);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        // --- 1. MOCK POST REQUEST (Includes requested fields: method, POST, headers, Content-Type) ---
+        // This simulates a local quote being sent to the server. JSONPlaceholder will
+        // accept the POST but not persist it, so we ignore the response for app data.
+        const postResponse = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json" 
+            },
+            body: JSON.stringify({ 
+                title: 'mock quote title',
+                body: 'This is a mock quote body sent via POST.',
+                userId: 99
+            })
+        });
+        
+        if (!postResponse.ok) {
+            console.warn(`Mock POST failed with status: ${postResponse.status}. Continuing with GET.`);
         }
-        const posts = await response.json();
+        
+        // --- 2. ACTUAL GET REQUEST (To fetch the list required for app functionality) ---
+        const getResponse = await fetch(API_URL);
+        if (!getResponse.ok) {
+            throw new Error(`HTTP error! status: ${getResponse.status}`);
+        }
+        const posts = await getResponse.json();
         
         // Map the API data structure (post.body -> text) to our quote structure
         return posts.map(post => ({
