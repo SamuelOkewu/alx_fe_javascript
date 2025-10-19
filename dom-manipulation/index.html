@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Quote Generator</title>
+    <!-- Load Tailwind CSS for utility styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom Styles for aesthetics */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            max-width: 600px;
+            width: 100%;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+        }
+        .quote-text {
+            border-left: 4px solid #3b82f6;
+            padding-left: 1.5rem;
+            font-style: italic;
+            color: #1f2937;
+            font-size: 1.5rem;
+            line-height: 1.6;
+        }
+        .category-pill {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .category-pill:hover {
+            opacity: 0.9;
+        }
+        .button-primary {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        .button-primary:hover {
+            background-color: #2563eb;
+        }
+        .form-container input, .form-container select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Dynamic Quote Generator</h1>
+
+        <!-- Placeholder for Quote Display -->
+        <div id="quote-display" class="mb-8 p-4 bg-gray-50 border border-gray-200 rounded-lg min-h-[120px] flex flex-col justify-center">
+            <!-- Quote content will be inserted here by script.js -->
+            <p class="text-center text-gray-500">Click 'Show New Quote' to begin.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center sm:justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-8">
+            <!-- Filter Dropdown -->
+            <select id="category-filter" class="w-full sm:w-auto p-2 border border-gray-300 rounded-md shadow-sm bg-white">
+                <option value="all">All Categories</option>
+                <!-- Dynamic options added by script.js -->
+            </select>
+
+            <!-- Generate Button -->
+            <button id="show-quote-btn" class="button-primary w-full sm:w-auto">
+                Show New Quote
+            </button>
+
+            <!-- Add Quote Button -->
+            <button id="add-quote-form-btn" class="button-primary bg-green-500 hover:bg-green-600 w-full sm:w-auto">
+                Add Quote
+            </button>
+        </div>
+
+        <!-- Placeholder for Dynamic Form -->
+        <div id="add-quote-form-container" class="mt-8">
+            <!-- Dynamic form will be created here by script.js -->
+        </div>
+
+    </div>
+
+    <!-- Link the external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>
