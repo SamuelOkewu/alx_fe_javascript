@@ -111,6 +111,17 @@
             <p id="import-export-feedback" class="text-sm text-center pt-2 h-6"></p>
         </div>
     </div>
+<!-- Category Filter - Added onchange handler -->
+                <select id="category-filter" onchange="filterQuotes()" class="p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 transition duration-150">
+                    <option value="all">All Categories</option>
+                </select>
+
+                <!-- Show New Quote Button -->
+                <button onclick="showRandomQuote()" class="w-full sm:w-auto px-6 py-3 bg-emerald-600 text-white font-bold rounded-lg shadow-md hover:bg-emerald-700 transition duration-150 transform hover:scale-[1.02] active:scale-95">
+                    Show New Quote
+                </button>
+            </div>
+        </div>
 
     <!-- Link to the main JavaScript file. Note: functions are globally accessible. -->
     <script src="script.js"></script>
