@@ -447,7 +447,7 @@ async function syncData(isManual = false) {
     let statusMessage = newItemsPulled > 0 
         ? `Quotes synced with server! ${newItemsPulled} new item(s) pulled from API.`
         : 'Quotes synced with server! Data is up to date.';
-        Alert('Data synchronization complete.');
+        alert('Data synchronization complete.');
     let statusClass = newItemsPulled > 0 ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-700';
 
     setSyncStatus(statusMessage, statusClass);
