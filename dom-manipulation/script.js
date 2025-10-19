@@ -394,6 +394,71 @@ function importQuotes(event) {
     fileReader.readAsText(file);
 }
 
+/**
+ * Sets the sync status message and styling.
+ */
+function setSyncStatus(message, classes) {
+    syncStatusElement.className = `flex-1 text-center py-3 px-4 rounded-lg text-sm font-medium ${classes}`;
+    syncStatusElement.innerHTML = message;
+}
+
+/**
+ * Implements the data sync and conflict resolution (API Precedence).
+ * @param {boolean} [isManual=false] - True if the sync was triggered manually.
+ */
+async function syncData(isManual = false) {
+    // Prevent multiple concurrent syncs if the previous one is still running (simple lock)
+    if (syncStatusElement.textContent.includes('Syncing')) return;
+
+    setSyncStatus('Syncing...', 'bg-yellow-100 text-yellow-800');
+
+    // 1. Fetch data from the API asynchronously
+    const serverQuotes = await fetchServerQuotes();
+    
+    // Check for API failure
+    if (serverQuotes.length === 0) {
+        setSyncStatus('Sync Failed: Could not connect to API.', 'bg-red-100 text-red-800');
+        setTimeout(() => setSyncStatus(isManual ? 'Ready for manual sync.' : 'Automatic sync active (30s).', 'bg-gray-100 text-gray-500 border border-gray-300'), 5000);
+        return;
+    }
+
+    let localQuotes = [...quotes]; // Start with the current application state
+    let newItemsPulled = 0;
+    
+    // Use quote text as a simple unique identifier for merging
+    const localQuoteTexts = new Set(localQuotes.map(q => q.text.trim()));
+
+    // 2. Conflict Resolution: API Precedence (Add new API quotes to local data)
+    serverQuotes.forEach(serverQ => {
+        if (!localQuoteTexts.has(serverQ.text.trim())) {
+            localQuotes.push(serverQ);
+            newItemsPulled++;
+        }
+    });
+
+    // 3. Update Application State and Storage
+    quotes = localQuotes; // Update global state with the merged data
+    saveQuotes();         // Local storage (client persistence) gets the merged data
+    
+    // 4. Update UI
+    refreshUI();
+    
+    // 5. Update status notification
+    let statusMessage = newItemsPulled > 0 
+        ? `Quotes synced with server! ${newItemsPulled} new item(s) pulled from API.`
+        : 'Quotes synced with server! Data is up to date.';
+        Alert('Data synchronization complete.');
+    let statusClass = newItemsPulled > 0 ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-700';
+
+    setSyncStatus(statusMessage, statusClass);
+
+    // Reset status after 5 seconds
+    setTimeout(() => {
+        setSyncStatus(isManual ? 'Ready for manual sync.' : 'Automatic sync active (30s).', 'bg-gray-100 text-gray-500 border border-gray-300');
+    }, 5000);
+}
+
+
 
 // --- Initialization ---
 document.addEventListener('DOMContentLoaded', () => {
