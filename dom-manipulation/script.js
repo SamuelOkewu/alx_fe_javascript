@@ -10,7 +10,7 @@ const defaultQuotes = [
 ];
 
 let quotes = []; // This array will hold the current application state (loaded from local storage)
-const SERVER_STORAGE_KEY = 'dynamicQuotesServer';
+const SERVER_STORAGE_KEY = 'fetchQuotesFromServer';
 let syncIntervalId;
 
 // --- DOM Elements ---
