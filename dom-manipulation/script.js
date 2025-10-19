@@ -10,6 +10,8 @@ const defaultQuotes = [
 ];
 
 let quotes = []; // This array will hold the current application state (loaded from local storage)
+const SERVER_STORAGE_KEY = 'dynamicQuotesServer';
+let syncIntervalId;
 
 // --- DOM Elements ---
 const quoteTextElement = document.getElementById('current-quote');
@@ -43,6 +45,10 @@ function loadQuotes() {
     }
 }
 
+// --- SERVER SIMULATION & SYNC HANDLERS ---
+function updateServerData() {
+    localStorage.setItem(SERVER_STORAGE_KEY, JSON.stringify(quotes));
+}
 /**
  * Saves the current quotes array to Local Storage.
  */
@@ -359,4 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
         quoteTextElement.textContent = "No quotes available. Add some or import data!";
         quoteMetaElement.textContent = "— Action Required";
     }
+     // 5. Set up periodic data sync (every 30 seconds)
+    syncIntervalId = setInterval(() => syncData(), 30000);
+    setSyncStatus('Automatic sync active (30s).', 'bg-gray-100 text-gray-500 border border-gray-300');
 });
