@@ -263,6 +263,17 @@ function exportQuotes() {
     displayFeedback(importExportFeedback, "Quotes exported successfully!", 'text-blue-600');
 }
 
+// --- FILTERING & UI LOGIC ---
+
+/**
+…    newQuoteText.value = '';
+    newQuoteCategory.value = '';
+
+    // refreshUI calls populateCategories, which updates the dropdown
+    refreshUI(); 
+    displayFeedback(feedbackMessage, "Quote successfully added and saved!", 'text-emerald-600');
+}
+
 /**
  * Imports quotes from a JSON file uploaded by the user.
  * @param {Event} event - The file input change event.
