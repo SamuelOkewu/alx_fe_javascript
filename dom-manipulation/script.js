@@ -320,6 +320,15 @@ function filterQuotes() {
     // 2. Re-render the list using the new filter
     renderQuoteList(selectedFilter);
 }
+function syncQuotes() {
+    const selectedFilter = categoryFilter.value;
+    
+    // 1. Save filter preference to Local Storage
+    localStorage.setItem('lastSelectedFilter', selectedFilter);
+
+    // 2. Re-render the list using the new filter
+    renderQuoteList(selectedFilter);
+}
 
 /**
  * Renders the list of all available quotes, filtered by the selected category.
