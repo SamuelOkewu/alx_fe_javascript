@@ -19,7 +19,7 @@ const quoteListContainer = document.getElementById('quote-list');
 const newQuoteText = document.getElementById('new-quote-text');
 const newQuoteCategory = document.getElementById('new-quote-category');
 const quoteCount = document.getElementById('quote-count');
-const addQuoteFormContainer = document.getElementById('add-quote-form-container');
+const addQuoteFormContainer = document.getElementById(["createAddQuoteForm"]);
 const feedbackMessage = document.getElementById('feedback-message');
 const importExportFeedback = document.getElementById('import-export-feedback');
 
