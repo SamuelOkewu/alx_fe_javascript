@@ -68,7 +68,7 @@ function showRandomQuote() {
 }
 
 /**
- * Toggles the visibility of the dynamic "Add Quote" form.
+ * Toggles the visibility of the dynamic "newQuote" form.
  */
 function toggleAddQuoteForm() {
     isFormVisible = !isFormVisible;
@@ -77,12 +77,12 @@ function toggleAddQuoteForm() {
         addQuoteFormBtn.textContent = 'Hide Form';
     } else {
         formContainer.innerHTML = '';
-        addQuoteFormBtn.textContent = 'Add Quote';
+        addQuoteFormBtn.textContent = 'newQuote';
     }
 }
 
 /**
- * Creates and inserts the "Add Quote" form dynamically into the DOM.
+ * Creates and inserts the "newQuote" form dynamically into the DOM.
  */
 function createAddQuoteForm() {
     // Re-run filter update to ensure the latest categories are in the form dropdown
@@ -109,7 +109,7 @@ function createAddQuoteForm() {
                     <input type="text" id="new-category-name" name="newCategoryName" placeholder="Enter new category name" />
                 </div>
 
-                <button type="submit" class="button-primary mt-4">Add Quote to List</button>
+                <button type="submit" class="button-primary mt-4">newQuote to List</button>
             </form>
         </div>
     `;
@@ -140,7 +140,7 @@ function handleCategoryChange(event) {
 }
 
 /**
- * Handles the submission of the dynamic "Add Quote" form.
+ * Handles the submission of the dynamic "newQuote" form.
  * @param {Event} event - The form submission event.
  */
 function handleNewQuoteSubmit(event) {
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event listener for the filter dropdown
     categoryFilter.addEventListener('change', showRandomQuote);
 
-    // Event listener for the Add Quote button
+    // Event listener for the newQuote button
     addQuoteFormBtn.addEventListener('click', toggleAddQuoteForm);
 
     // Display an initial quote
