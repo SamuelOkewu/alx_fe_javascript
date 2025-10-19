@@ -45,20 +45,34 @@ function loadQuotes() {
     }
 }
 
-// --- SERVER SIMULATION & SYNC HANDLERS ---
-/** * Simulates syncing data with a server by reading from Local Storage.
- */
-function syncData() {await, async}
+// --- EXTERNAL API & SYNC HANDLERS ---
 
-// --- SERVER SIMULATION & SYNC HANDLERS ---
-function updateServerData() {
-    localStorage.setItem(SERVER_STORAGE_KEY, JSON.stringify(quotes));
-}
+const API_URL = 'https://jsonplaceholder.typicode.com/posts';
+
 /**
- * Saves the current quotes array to Local Storage.
+ * Fetches data from the external mock API (JSONPlaceholder /posts).
+ * Maps API response (body -> text, "API Post" -> category) to quote structure.
+ * @returns {Promise<Array<{text: string, category: string}>>}
  */
-function saveQuotes() {
-    localStorage.setItem('dynamicQuotes', JSON.stringify(quotes));
+async function fetchServerQuotes() {
+    try {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const posts = await response.json();
+        
+        // Map the API data structure (post.body -> text) to our quote structure
+        return posts.map(post => ({
+            // The 'body' field contains the longer text we want to use as the quote
+            text: post.body.trim(),
+            category: "API Post" 
+        }));
+    } catch (e) {
+        console.error("Failed to fetch server quotes:", e);
+        // On failure, return an empty array to prevent app crash
+        return [];
+    }
 }
 
 /**
@@ -70,7 +84,7 @@ function loadLastViewedQuote() {
     if (lastQuote) {
         quoteTextElement.textContent = lastQuote;
         quoteMetaElement.textContent = lastCategory ? `— Last Session: ${lastCategory}` : `— Last Session Quote`;
-        return true;
+        return true;  
     }
     return false;
 }
