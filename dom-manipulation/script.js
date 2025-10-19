@@ -179,7 +179,7 @@ function handleAddQuote() {
     let category = newQuoteCategory.value.trim();
 
     if (!text || !category) {
-        displayFeedback(feedbackMessage, "Quote text and category cannot be empty!", 'text-red-500');
+        quoteDisplay(feedbackMessage, "Quote text and category cannot be empty!", 'text-red-500');
         return;
     }
 
@@ -192,7 +192,7 @@ function handleAddQuote() {
     newQuoteCategory.value = '';
 
     refreshUI();
-    displayFeedback(feedbackMessage, "Quote successfully added and saved!", 'text-emerald-600');
+    quoteDisplay(feedbackMessage, "Quote successfully added and saved!", 'text-emerald-600');
 }
 
 /**
@@ -206,7 +206,7 @@ function deleteQuote(event) {
 
     refreshUI();
 
-    displayFeedback(feedbackMessage, "Quote deleted and saved!", 'text-red-500');
+    quoteDisplay(feedbackMessage, "Quote deleted and saved!", 'text-red-500');
 }
 
 /**
@@ -223,7 +223,7 @@ function toggleAddForm() {
  * @param {string} message - The message to display.
  * @param {string} colorClass - Tailwind class for color (e.g., 'text-red-500').
  */
-function displayFeedback(element, message, colorClass) {
+function quoteDisplay(element, message, colorClass) {
     element.textContent = message;
     element.className = `text-sm text-center pt-2 h-6 font-semibold ${colorClass}`;
     setTimeout(() => {
@@ -239,7 +239,7 @@ function displayFeedback(element, message, colorClass) {
  */
 function exportQuotes() {
     if (quotes.length === 0) {
-        displayFeedback(importExportFeedback, "Cannot export an empty list!", 'text-red-500');
+        quoteDisplay(importExportFeedback, "Cannot export an empty list!", 'text-red-500');
         return;
     }
 
@@ -260,13 +260,12 @@ function exportQuotes() {
     // Clean up the object URL
     URL.revokeObjectURL(url);
 
-    displayFeedback(importExportFeedback, "Quotes exported successfully!", 'text-blue-600');
+    quoteDisplay(importExportFeedback, "Quotes exported successfully!", 'text-blue-600');
 }
-
 //**
  //* Implements the filtering logic for the quote list display.
-// * Also persists the selected filter to Local Storage.
-// */
+ //* Also persists the selected filter to Local Storage.
+ //*/
 function filterQuotes() {
     const selectedFilter = categoryFilter.value;
     
@@ -290,7 +289,7 @@ function filterQuotes() {
 
     // refreshUI calls populateCategories, which updates the dropdown
     refreshUI(); 
-    displayFeedback(feedbackMessage, "Quote successfully added and saved!", 'text-emerald-600');
+    quoteDisplay(feedbackMessage, "Quote successfully added and saved!", 'text-emerald-600');
 }
 
 /**
@@ -309,7 +308,7 @@ function importQuotes(event) {
 
             // Basic validation
             if (!Array.isArray(importedQuotes) || !importedQuotes.every(q => q.text && q.category)) {
-                 displayFeedback(importExportFeedback, "Invalid JSON format. Expected array of {text, category}.", 'text-red-500');
+                 quoteDisplay(importExportFeedback, "Invalid JSON format. Expected array of {text, category}.", 'text-red-500');
                  return;
             }
 
@@ -323,11 +322,11 @@ function importQuotes(event) {
             refreshUI();
 
             const message = `Successfully imported ${newUniqueQuotes.length} unique quotes! Total quotes: ${quotes.length}`;
-            displayFeedback(importExportFeedback, message, 'text-purple-600');
+            quoteDisplay(importExportFeedback, message, 'text-purple-600');
 
         } catch (error) {
             console.error("Error during JSON import:", error);
-            displayFeedback(importExportFeedback, "Error reading or parsing JSON file.", 'text-red-500');
+            quoteDisplay(importExportFeedback, "Error reading or parsing JSON file.", 'text-red-500');
         } finally {
             // Reset file input so the same file can be imported again
             event.target.value = null;
@@ -335,7 +334,7 @@ function importQuotes(event) {
     };
 
     fileReader.onerror = function() {
-        displayFeedback(importExportFeedback, "Error reading file.", 'text-red-500');
+        quoteDisplay(importExportFeedback, "Error reading file.", 'text-red-500');
     };
 
     fileReader.readAsText(file);
